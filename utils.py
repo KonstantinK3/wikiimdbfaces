@@ -1,6 +1,7 @@
 from scipy.io import loadmat
 from datetime import datetime
 import os
+import cv2
 
 
 def calc_age(taken, dob):
@@ -40,3 +41,34 @@ def mk_dir(dir):
         os.mkdir( dir )
     except OSError:
         pass
+    
+def get_face(imagePath):
+    '''
+    возвращает массив с самым большим лицом на фото
+    если лица нет, возвращает []
+    '''
+    cascPath = "haarcascade_frontalface_default.xml"
+    faceCascade = cv2.CascadeClassifier(cascPath)
+    image = cv2.imread(imagePath)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    faces = faceCascade.detectMultiScale(
+        gray,
+        scaleFactor=1.05,
+        minNeighbors=5,
+        minSize=(50, 50)
+    )
+    try:
+        x_max = faces[0][0]
+    except:
+        return []
+    y_max = faces[0][1]
+    w_max = faces[0][2]
+    h_max = faces[0][3]
+    for (x, y, w, h) in faces:
+        if w > w_max:
+            x_max = x
+            y_max = y
+            w_max = w
+            h_max = h       
+    cropped = image[y_max:y_max+h_max,x_max:x_max+w_max]
+    return cropped    

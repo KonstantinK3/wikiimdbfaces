@@ -1,16 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from utils import get_meta
-import matplotlib.image as mpimg
 from skimage import io
-from skimage.transform import rescale, resize
+from skimage.transform import resize
 from keras.utils.np_utils import to_categorical
+
+
 
 db = "wiki"
 # db = "imdb"
 mat_path = f"data/{db}_crop/{db}.mat"
 imgs_path = f"data/{db}_crop/"
-data_path = f"data/{db}_arrays/"
+data_path = f"data1/{db}_arrays/"
 full_path, dob, gender, photo_taken, face_score, second_face_score, age, name = get_meta(mat_path, db)
 
 ending = (len(full_path))

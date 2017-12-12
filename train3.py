@@ -5,11 +5,12 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Dropout, Flatten, Dense
 import numpy as np
 
-arrays_number = 1 #количество массивов
+arrays_number = 31 #количество массивов. 8 масс по 10 эпох - кул
+epochs_number = 3
 db = "wiki"
 data_path = f"data/{db}_arrays/"
 
-model_number = 4
+model_number = '31m3ep'
 
 model = Sequential()
 model.add(Conv2D(32, (3, 3), activation='relu', strides=3, input_shape=(150, 150, 3)))
@@ -33,7 +34,7 @@ for array_num in range(0, arrays_number+1):
     y = np.load(f'{data_path}/y_{db}_gender_{array_num}.npy')
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
     model.fit(X_train, y_train, 
-              epochs=30,
+              epochs=epochs_number,
               batch_size=100,
               validation_data=(X_test, y_test))
 
