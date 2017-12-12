@@ -32,7 +32,7 @@ model.add(Dense(256, activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(2, activation='softmax'))
 
-rms = RMSprop(lr = 0.0009)
+rms = RMSprop(lr = 0.002)
 
 model.compile(loss='categorical_crossentropy',
               optimizer=rms,
