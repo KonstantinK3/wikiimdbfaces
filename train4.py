@@ -2,25 +2,25 @@
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Dropout, Flatten, Dense
+from keras.layers import Dropout, Flatten, Dense, BatchNormalization
 from keras.optimizers import RMSprop
 import numpy as np
 
 arrays_number = 0 #количество массивов.
-epochs_number = 20
+epochs_number = 30
 db = "imdb"
 data_path = f"data/{db}_arrays_cropped_faces/"
 
-model_number = '1'
+model_number = 'convBatch2all'
 
 model = Sequential()
 model.add(Conv2D(96, (7, 7), strides=4, input_shape=(227, 227, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-#model.add(BatchNormalization())
+model.add(BatchNormalization())
 
 model.add(Conv2D(256, (5, 5), strides=1, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-#model.add(BatchNormalization())
+model.add(BatchNormalization())
 
 model.add(Conv2D(256, (3, 3), strides=1, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -32,10 +32,8 @@ model.add(Dense(256, activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(2, activation='softmax'))
 
-rms = RMSprop(lr = 0.002)
-
 model.compile(loss='categorical_crossentropy',
-              optimizer=rms,
+              optimizer='adam',
               metrics=['accuracy'])
 
 for array_num in range(0, arrays_number+1):
@@ -48,6 +46,9 @@ for array_num in range(0, arrays_number+1):
               epochs=epochs_number,
               batch_size=50,
               validation_data=(X_test, y_test))
+    
+print (f'saving model models/{db}_model_gender_{model_number}.h5')
+model.save(f'models/{db}_model_gender_{model_number}.h5')
 
 #--------
 #array_num = 0

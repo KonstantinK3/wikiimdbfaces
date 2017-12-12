@@ -16,7 +16,7 @@ batch_size = 10000
 iterations = ending//batch_size+1
 image_size = 227
 
-for iteration in range(0, iterations+1):
+for iteration in range(1, iterations+1):
     current_iteration = iteration * batch_size
     last_iteration = current_iteration + batch_size
     if last_iteration > ending:
