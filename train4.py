@@ -3,15 +3,18 @@ from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Dropout, Flatten, Dense, BatchNormalization
-from keras.optimizers import RMSprop
 import numpy as np
+import keras.backend as K
+from keras.models import load_model
 
-arrays_number = 28 #количество массивов.
-epochs_number = 30
+K.clear_session()
+
+arrays_number = 45 #количество массивов.
+epochs_number = 15
 db = "imdb"
 data_path = f"data/{db}_arrays_cropped_faces/"
 
-model_number = '28m25e'
+model_number = '45m15e_v4dp5'
 
 model = Sequential()
 model.add(Conv2D(96, (7, 7), strides=4, input_shape=(227, 227, 3), activation='relu'))
@@ -27,14 +30,16 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())  # this converts our 3D feature maps to 1D feature vectors
 model.add(Dense(512, activation='relu'))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 model.add(Dense(256, activation='relu'))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 model.add(Dense(2, activation='softmax'))
 
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
+
+#model = load_model(f'models/imdb_model_gender_{model_number}_it1.h5')
 
 for array_num in range(0, arrays_number+1):
     print(f'loading {data_path}images_{db}_{array_num}.npy')
@@ -46,6 +51,8 @@ for array_num in range(0, arrays_number+1):
               epochs=epochs_number,
               batch_size=50,
               validation_data=(X_test, y_test))
+    print (f'saving model models/{db}_model_gender_{model_number}_it{array_num}.h5')
+    model.save(f'models/{db}_model_gender_{model_number}_it{array_num}.h5')
     
 print (f'saving model models/{db}_model_gender_{model_number}.h5')
 model.save(f'models/{db}_model_gender_{model_number}.h5')
