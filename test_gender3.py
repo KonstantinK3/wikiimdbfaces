@@ -18,7 +18,8 @@ def gender(image_num, cat):
         detected_gender = 'woman'
     else:
         detected_gender = 'man'
-    return detected_gender, predict[0,0], predict[0,1]
+    return detected_gender, round(predict[0,0]*100,4), round(predict[0,1]*100,4)
+#    return detected_gender, predict[0,0], predict[0,1]
 
 for i in range(1,9):
     detected_gender, woman_score, man_score = gender(i, 'f')

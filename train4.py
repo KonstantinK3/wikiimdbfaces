@@ -6,12 +6,12 @@ from keras.layers import Dropout, Flatten, Dense, BatchNormalization
 from keras.optimizers import RMSprop
 import numpy as np
 
-arrays_number = 0 #количество массивов.
+arrays_number = 28 #количество массивов.
 epochs_number = 30
 db = "imdb"
 data_path = f"data/{db}_arrays_cropped_faces/"
 
-model_number = 'convBatch2all'
+model_number = '28m25e'
 
 model = Sequential()
 model.add(Conv2D(96, (7, 7), strides=4, input_shape=(227, 227, 3), activation='relu'))
