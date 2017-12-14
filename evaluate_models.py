@@ -1,9 +1,11 @@
 import numpy as np
 from keras.models import load_model
+import keras.backend as K
+K.clear_session()
 
 db = "imdb"
 data_path = f"data/{db}_arrays_cropped_faces/"
-model_number = '45m15ev3_it'
+model_number = '45m15e_v4dp05_it'
 
 array_num = 0
 print(f'loading {data_path}images_{db}_{array_num}.npy')
@@ -28,12 +30,12 @@ eval_perc.plot(title="perc")
 
 import matplotlib.pyplot as plt
 plt.plot(eval_loss)
-plt.plot(eval_perc)
+plt.plot(eval_perc*10)
 
 eval_loss1 = np.array(eval_loss)
 eval_perc1 = np.array(eval_perc)
-np.save('loss', np.array(eval_loss))
-np.save('perc', np.array(eval_perc))
+np.save('loss2', np.array(eval_loss))
+np.save('perc2', np.array(eval_perc))
     
 #y_hat = model.predict(X)
 #ans = 0

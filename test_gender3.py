@@ -3,7 +3,7 @@ from keras.models import load_model
 import cv2
 from utils import get_face
 
-model_number = '45m15ev3_it7'
+model_number = '45m15e_v4dp05_it8'
 
 def gender(image_num, cat):
     image_name = f"images/{cat}/{image_num}.jpg"

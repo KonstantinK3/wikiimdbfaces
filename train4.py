@@ -4,9 +4,9 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Dropout, Flatten, Dense, BatchNormalization
 import numpy as np
-import keras.backend as K
-from keras.models import load_model
+#from keras.models import load_model
 
+import keras.backend as K
 K.clear_session()
 
 arrays_number = 45 #количество массивов.
@@ -14,7 +14,7 @@ epochs_number = 15
 db = "imdb"
 data_path = f"data/{db}_arrays_cropped_faces/"
 
-model_number = '45m15e_v4dp5'
+model_number = '45m15e_v4dp05'
 
 model = Sequential()
 model.add(Conv2D(96, (7, 7), strides=4, input_shape=(227, 227, 3), activation='relu'))
@@ -30,9 +30,9 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())  # this converts our 3D feature maps to 1D feature vectors
 model.add(Dense(512, activation='relu'))
-model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 model.add(Dense(256, activation='relu'))
-model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 model.add(Dense(2, activation='softmax'))
 
 model.compile(loss='categorical_crossentropy',
